@@ -1,0 +1,54 @@
+<h5>hai</h5>
+<script>
+  var msg = "asik lu bang sini ngopi\n";
+   document.addEventListener('keydown', function() {
+   
+    if (event.keyCode == 123) {
+      alert(msg);
+      return false;
+    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+      alert(msg);
+      return false;
+    } else if (event.ctrlKey && event.keyCode == 85) {
+      alert(msg);
+      return false;
+    }
+  }, false);
+  
+  if (document.addEventListener) {
+    document.addEventListener('contextmenu', function(e) {
+      alert(msg);
+      e.preventDefault();
+    }, false);
+  } else {
+    document.attachEvent('oncontextmenu', function() {
+      alert(msg);
+      window.event.returnValue = false;
+    });
+  }
+(function() {
+    function detectEruda() {
+        return window.eruda || (window.console && window.console.log && /eruda/i.test(window.console.log.toString()));
+    }
+
+    function preventInspection() {
+        if (detectEruda()) {
+            alert(msg);
+            window.location.href = 'https://fetch-test-yj.vercel.app'; 
+        }
+    }
+
+    setInterval(preventInspection, 5000);
+    let lastConsole = console.log;
+    Object.defineProperty(console, 'log', {
+        set: function(value) {
+            if (detectEruda()) {
+                preventInspection();
+            }
+            lastConsole = value;
+        },
+        get: function() {
+            return lastConsole;
+        }
+    });
+</script>
